@@ -6,9 +6,26 @@ const estado = reactive({
   valor1: 0,
   valor2: 0,
   resultado: 0,
-  operador: 'soma',
+  operador: '+',
 })
 
+const realizaOperacao = () =>{
+  const valorLimpo1 = Number(estado.valor1)
+  const valorLimpo2 = Number(estado.valor2)
+  
+
+  if(estado.operador === '/' && valorLimpo1 == 0 && valorLimpo2 == 0){
+    return 0
+  }
+
+  switch(estado.operador){
+    case '+': return valorLimpo1 + valorLimpo2
+    case '-': return valorLimpo1 - valorLimpo2
+    case 'x': return valorLimpo1 * valorLimpo2
+    case '/': return valorLimpo1 / valorLimpo2
+    default: return 'Erro type 001'
+  }
+}
 </script>
 
 <template>
@@ -21,26 +38,27 @@ const estado = reactive({
       <header class="p-2 d-block">
         <h4 class="text-center text-uppercase">Resultado da operação:</h4>
       </header>
-      <span class="d-block text-center fs-4 font-monospace ">{{ estado.valor1 }} + {{estado.valor2}} = {{ estado.resultado }}</span>
+      <span class="d-block text-center fs-4 font-monospace ">{{ estado.valor1 }} {{ estado.operador }} {{estado.valor2}} = {{ realizaOperacao() }}</span>
     </div>
 
     <div class="row mt-5">
       <div class="col-md-5 col-lg-5 col-12">
         <label for="" class="form-label fw-semibold text-capitalize">Valor da operação</label>
-        <input @keyup="evento => estado.valor1 = evento.target.value" type="number" placeholder="Digite aqui o primeiro valor" class="form-control">
+        <input required @keyup="evento => estado.valor1 = evento.target.value" type="number" placeholder="Digite aqui o primeiro valor" class="form-control">
       </div>
       <div class="col-md-2 col-12">
         <label for="" class="form-label fw-semibold text-capitalize">Operador</label>
-        <select class="form-control text-center">
-          <option value="soma">+</option>
-          <option value="subtracao">-</option>
-          <option value="multiplicacao">x</option>
-          <option value="divisao">/</option>
+        <select @change="evento => estado.operador = evento.target.value" class="form-control text-center">
+          <option value="+">+</option>
+          <option value="-">-</option>
+          <option value="x">x</option>
+          <option value="/">/</option>
         </select>
+        {{ estado.operador }}
       </div>
       <div class="col-md-5 col-lg-5 col-12">
-        <label @keyup="evento => estado.valor2 = evento.target.value" for="" class="form-label fw-semibold text-capitalize">Valor da operação</label>
-        <input type="number" placeholder="Digite aqui o segundo valor" class="form-control">
+        <label  for="" class="form-label fw-semibold text-capitalize">Valor da operação</label>
+        <input required @keyup="evento => estado.valor2 = evento.target.value" type="number" placeholder="Digite aqui o segundo valor" class="form-control">
       </div>
     </div>
   </div>
