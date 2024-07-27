@@ -54,7 +54,6 @@ const realizaOperacao = () =>{
           <option value="x">x</option>
           <option value="/">/</option>
         </select>
-        {{ estado.operador }}
       </div>
       <div class="col-md-5 col-lg-5 col-12">
         <label  for="" class="form-label fw-semibold text-capitalize">Valor da operação</label>
